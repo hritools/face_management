@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photos</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<body>
+<h1 style="color: #2e6c80;">Photos</h1>
+<h2> Here you'll only find the photos with identified human faces on them, and some means of
+    filtering: by the person identified, date and camera, verification.
+</h2>
+
+
+    <h3>
+        <a href="/photos/latest">
+            The latest photos:
+        </a>
+    </h3>
+    {% if latest_photos %}
+        <table>
+        <tbody>
+            <tr>
+            {% for photo in latest_photos %}
+                <td> <img src="{{ photo.picture.url }}"> </td>
+            {% endfor %}
+            </tr>
+        </tbody>
+        </table>
+    {% else %}
+        <p> No photos are available. </p>
+    {% endif %}
+
+
+    <h3>
+        <a href="/photos/unverified">
+            Unlabeled/unverified photos:
+        </a>
+    </h3>
+    {% if not_verified %}
+        <table>
+        <tbody>
+            <tr>
+            {% for photo in not_verified %}
+                <td> <img src="{{ photo.picture.url }}"> </td>
+            {% endfor %}
+            </tr>
+        </tbody>
+        </table>
+    {% else %}
+        <p> No photos are available. </p>
+    {% endif %}
+
+</body>
+</html>

@@ -23,11 +23,13 @@ class Person(models.Model):
 class Photo(models.Model):
     shot_date = models.DateTimeField('when the shot was taken')
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
-    picture = models.CharField(max_length=100)
+    picture = models.ImageField(upload_to='shots/%Y/%m/%d')
+    verified = models.BooleanField(default=False)
 
     class Meta:
         indexes = [
             models.Index(fields=['shot_date']),
+            models.Index(fields=['verified']),
         ]
 
     def __str__(self):
@@ -42,14 +44,12 @@ class PhotoIdentification(models.Model):
     right = models.IntegerField(default=None)
     top = models.IntegerField(default=None)
     bottom = models.IntegerField(default=None)
-
-    verified = models.BooleanField(default=False)
+    # verified = models.BooleanField(default=False)
 
     class Meta:
         indexes = [
             models.Index(fields=['person']),
             models.Index(fields=['photo']),
-            models.Index(fields=['verified']),
         ]
 
     def __str__(self):
